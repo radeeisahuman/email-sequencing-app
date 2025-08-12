@@ -33,9 +33,13 @@ class Emails(Base):
 
 	id = Column(Integer, primary_key=True, index=True)
 	email = Column(Text, nullable=False)
+	sequence = relationship("Sequence", back_populates="emails")
 	sequence_id = Column(Integer, ForeignKey("sequence.id"))
 
 class Sequence(Base):
 	__tablename__ = "sequence"
 
-	
+	id = Column(Integer, primary_key=True, index=True)
+	brand_id = Column(Integer, ForeignKey("users.id"))
+	brand = relationship("Users", back_populates="sequence")
+	emails = relationship("Emails", back_populates="part_of_sequence")
